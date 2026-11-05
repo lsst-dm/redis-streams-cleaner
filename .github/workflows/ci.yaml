@@ -18,7 +18,11 @@ name: CI
 jobs:
   build:
     # Skip on forks - only run on this repo PRs
-    if: github.event.pull_request.head.repo.full_name == github.repository
+    if: |
+      github.event_name == 'push' ||
+      (github.event_name == 'pull_request' &&
+       github.event.pull_request.head.repo.full_name == github.repository)
+
     runs-on: ubuntu-latest
 
     steps:
